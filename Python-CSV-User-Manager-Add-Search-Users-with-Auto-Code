@@ -1,0 +1,62 @@
+import csv
+
+md = {}
+
+# READ FILE
+with open('users2.csv')as u:
+    content = u.readlines()
+    filds = content[0][:-1].split(',')
+# print(filds)
+def inputf():
+
+    code = 1
+    while True:
+        l = []
+        conti = input('add user:')
+        if conti == 'y':
+            for i in filds:
+                inp  = input(f'enter {i}: ')
+                l.append(inp)
+            with open('users2.csv', mode='a',newline='') as f:
+                w = csv.writer(f)
+                w.writerow(l)
+
+        elif conti == 'n':
+            break
+        else:
+            print('invalid input!1')
+            pass
+
+# with open('users2.csv') as f:
+#
+#     d = list(csv.DictReader(f))
+
+
+# inputf()
+# for i in d:
+#     if i['code']=='1':
+#         print(i)
+
+def useaarch():
+    while True:
+        conti = input('search?(y/n): ')
+        if conti == 'y':
+            with open('users2.csv') as f:
+                d = list(csv.DictReader(f))
+            tsearch = input(f'enter type of search{filds}')
+            if tsearch in filds:
+                fild = input(f'enter {tsearch}: ')
+                for i in d:
+                    if i[tsearch]==fild:
+                        print(i)
+
+            else:
+                print('fild not found!!')
+
+        elif conti =='n':
+            break
+        else:
+            print('invalid input!!')
+            pass
+inputf()
+useaarch()
