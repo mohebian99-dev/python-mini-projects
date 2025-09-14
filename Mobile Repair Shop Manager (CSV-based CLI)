@@ -1,0 +1,94 @@
+import csv
+#--------READ FILE--------
+file = r'D:\sb lear\python\my-practices\p1\pythonProject\.idea\devices.csv'
+with open(file) as d:
+    content = d.readlines()
+    filds = content[0][:-1].split(',')
+    print(filds)
+
+#-----------------FUNCTION(s)---------------------
+def inp():
+    while True:
+        l = []
+        conti = input('add user ??(y/n):')
+        if conti == 'y':
+            for i in filds:
+                inp = input(f'enter {i}: ')
+                l.append(inp)
+            with open(file, mode='a', newline='') as f:
+                w = csv.writer(f)
+                w.writerow(l)
+        elif conti == 'n':
+            break
+        else:
+            print('invalid inpput!!')
+            pass
+
+def search():
+    while True:
+        conti = input('search?(y/n): ')
+        if conti == 'y':
+            with open(file) as f:
+                d = list(csv.DictReader(f))
+                tsearch = input(f'input type of search:{filds} ')
+                if tsearch in filds:
+                    s = input(f'enter {tsearch} : ')
+                    for i in d:
+                        if i[tsearch] == s:
+                            print(i)
+                else:
+                    print('fild not found!')
+        elif conti == 'n':
+            break
+        else:
+            print('fild not found!!')
+            pass
+
+def update():
+    while True:
+        conti = input('search?(y/n): ')
+        if conti == 'y':
+            with open(file, newline='') as f:
+                d = list(csv.DictReader(f))
+                cd = input('enter code: ')
+                newst = input('enter new status: ')
+                for row in d:
+                    if row['code'] == cd:
+                        row['status'] = newst
+                        break
+            with open(file, mode='w', newline='') as f:
+                writer = csv.DictWriter(f, fieldnames=d[0].keys())
+                writer.writeheader()
+                writer.writerows(d)
+        elif conti == 'n':
+            break
+        else:
+            print('invalid input!!')
+            pass
+
+def sumearn():
+    l = []
+    with open(file) as f:
+        sc = list(csv.DictReader(f))
+        for s in sc:
+            l.append(s['price'])
+    newlist = list(map(lambda x: int(x.replace(',', '')), l))
+    sumf = sum(newlist)
+    print(f'total earn is: {sumf:,}')
+
+#----------------------call functions----------------------
+choice = input('chose your op :\n\t1)add user\n\t2)search\n\t3)change status\n\t4)show total income\n\t5)Exit\nanswer: ')
+if choice == '1':
+    inp()
+elif choice == '2':
+    useaarch()
+elif choice == '3':
+    update()
+elif choice == '4':
+    sumearn()
+elif choice == '5':
+    print('app closed!!')
+    exit()
+else:
+    print('invalid input!!')
+    pass
