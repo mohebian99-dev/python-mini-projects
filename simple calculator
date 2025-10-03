@@ -1,0 +1,96 @@
+from tkinter import *
+def Get_Key(event):
+    if s.get()=='num':
+        s.set('')
+    if event.keysym == "BackSpace":
+        s.set(s.get()[:-1])
+    if s.get()==''and event.char in "+-*/()":
+        s.set('error')
+        lb.after(2000,lambda :s.set(''))
+        return
+
+
+    elif event.char.isdigit() or event.char in "+-*/()":    #NEW
+        s.set(f'{s.get()+event.char}')
+
+
+
+
+def plus():
+    if s.get()=='':
+        s.set('error')
+        lb.after(2000,lambda :s.set(''))
+        return
+    else:
+        s.set(s.get() + "+")
+def mines():
+    if s.get()=='':
+        s.set('error')
+        lb.after(2000,lambda :s.set(''))
+        return
+    else:
+        s.set(s.get() + "-")
+def multi():
+    if s.get()=='':
+        s.set('error')
+        lb.after(2000,lambda :s.set(''))
+        return
+    else:
+        s.set(s.get() + "*")
+def div():
+    if s.get()=='':
+        s.set('error')
+        lb.after(2000,lambda :s.set(''))
+        return
+    else:
+        s.set(s.get() + "/")
+win = Tk()
+win.geometry('300x400')
+win.resizable(False,False)
+textf = Frame(win,width=300,height=60 ,relief='solid',bd=3)   #NEW
+textf.pack_propagate(False)     #NEW
+
+textf.pack()
+s = StringVar()
+lb = Label(textf,textvariable=s,font=('BYekan', 24, 'bold'))
+lb.place(x = 1,y = 10)
+win.bind('<Key>',Get_Key)
+content = Frame(win,width=300,height=318)
+# content.pack_propagate()
+content.pack()
+bt1= Button(content,text='1',width=10,height=5,command=lambda :s.set(s.get()+'1'))
+bt1.place(x= 10,y= 10)
+bt2= Button(content,text='2',width=10,height=5,command=lambda :s.set(s.get()+'2'))
+bt2.place(x= 80,y= 10)
+bt3= Button(content,text='3',width=10,height=5,command=lambda :s.set(s.get()+'3'))
+bt3.place(x= 150,y= 10)
+btdel= Button(content,text='Del',width=10,height=5,command=lambda :s.set(s.get()[:-1]))
+btdel.place(x= 220,y= 10)
+bt4= Button(content,text='4',width=10,height=5,command=lambda :s.set(s.get()+'4'))
+bt4.place(x= 10,y= 95)
+bt5= Button(content,text='5',width=10,height=5,command=lambda :s.set(s.get()+'5'))
+bt5.place(x= 80,y= 95)
+bt6= Button(content,text='6',width=10,height=5,command=lambda :s.set(s.get()+'6'))
+bt6.place(x= 150,y= 95)
+# btdiv= Button(content,text='➗',width=10,height=5,command=lambda : s.set(s.get()+'/')) old
+btdiv= Button(content,text='➗',width=10,height=5,command=div)
+btdiv.place(x= 220,y= 95)
+bt7= Button(content,text='7',width=10,height=5,command=lambda :s.set(s.get()+'7'))
+bt7.place(x= 10,y= 180)
+bt8= Button(content,text='8',width=10,height=5,command=lambda :s.set(s.get()+'8'))
+bt8.place(x= 80,y= 180)
+bt9= Button(content,text='9',width=10,height=5,command=lambda :s.set(s.get()+'9'))
+bt9.place(x= 150,y= 180)
+btmulti= Button(content,text='✖️',width=10,height=5,command=multi)
+
+btmulti.place(x= 220,y= 180)
+btclear= Button(content,text='clear',width=10,height=2,command=lambda :s.set(''))
+btclear.place(x= 10,y= 269)
+btplus= Button(content,text='➕',width=10,height=2,command=plus)
+btplus.place(x= 80,y= 269)
+btmines= Button(content,text='➖',width=10,height=2,command=mines)
+btmines.place(x= 150,y= 269)
+btequ= Button(content,text='🟰',width=10,height=2,command= lambda :s.set(eval(s.get())))
+btequ.place(x= 220,y= 269)
+win.bind('<Return>',lambda event:s.set(eval(s.get())))
+mainloop()
